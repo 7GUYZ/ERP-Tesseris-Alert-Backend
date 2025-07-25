@@ -1,0 +1,38 @@
+server:
+  port: 19093
+
+spring:
+  application:
+    name: alarm-service
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  jpa:
+#    show-sql: true # 콘솔로그로 출력하려면
+    hibernate:
+      ddl-auto: update # 주의. 잘못 건드리면 DB가 날라감
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+#        format_sql: true # SQL 포맷팅
+        highlight_sql: true # ANSI 코드에 색을 나타낸다
+#        use_sql_comments: true # SQL 내부에 /* */ 주석 추가
+
+  logging:
+    level:
+#      org.hibernate.SQL: debug # logger에 출력하려면
+#      org.hibernate.type: trace
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+        
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD}
