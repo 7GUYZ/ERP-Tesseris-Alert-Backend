@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alert-backend
+  namespace: default
+  labels:
+    app: alert-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alert-backend
+  template:
+    metadata:
+      labels:
+        app: alert-backend
+    spec:
+      containers:
+        - name: alert-backend
+          image: __DOCKER_IMAGE__:__TAG__
+          ports:
+            - containerPort: 19093
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: alert-backend-secret
+                  key: DB_URL
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: alert-backend-secret
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: alert-backend-secret
+                  key: DB_PASSWORD
+            - name: JASYPT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: alert-backend-secret
+                  key: JASYPT_PASSWORD
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod" 
