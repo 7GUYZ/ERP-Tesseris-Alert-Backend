@@ -65,7 +65,7 @@ public class AlarmService {
         dto.setUserAlarmsId(userAlarm.getUserAlarmsId());
         dto.setUserIndex(userAlarm.getUserIndex());
         dto.setIsActive(userAlarm.getIsActive());
-        dto.setUpdatedAt(userAlarm.getUpdatedAt() != null ? userAlarm.getUpdatedAt().toString() : null);
+        dto.setUpdatedAt(userAlarm.getUpdatedAt());
         
         // 알림 타입 정보 설정
         if (userAlarm.getAlarmTypes() != null) {
@@ -76,6 +76,14 @@ public class AlarmService {
         }
         
         return dto;
+    }
+    
+    /**
+     * 특정 알림 타입 조회
+     */
+    public AlarmTypes getAlarmType(Integer alarmTypeId) {
+        return alarmTypesRepo.findById(alarmTypeId)
+                .orElseThrow(() -> new RuntimeException("알림 타입을 찾을 수 없습니다: " + alarmTypeId));
     }
     
     /**
