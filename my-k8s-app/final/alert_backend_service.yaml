@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: alert-backend-service
+  namespace: default
+  labels:
+    app: alert-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: alert-backend
+  ports:
+    - protocol: TCP
+      port: 19093
+      targetPort: 19093 

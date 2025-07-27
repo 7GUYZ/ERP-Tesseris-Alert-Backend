@@ -1,5 +1,7 @@
 package com.msa.alarm_service.api.model;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,7 @@ public class UserAlarmsDTO {
     private Integer userIndex;
     private Integer alarmTypesId;
     private Integer isActive;
-    private String updatedAt;
+    private LocalDateTime updatedAt;
     
     // 알림 타입 정보 (선택적)
     private String alarmTypesCode;
