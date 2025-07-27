@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @ControllerAdvice
 public class ExceptionAdvice {
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(CustomException.class)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> handleCustomException(CustomException ex) {
 
@@ -26,5 +26,18 @@ public class ExceptionAdvice {
         response.put("data", null);  // data는 null로 고정
 
         return ResponseEntity.badRequest().body(response);
-    }    
+    }
+    
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
+        log.error("Unexpected error occurred: ", ex);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("resultCode", 500);
+        response.put("message", "서버 내부 오류가 발생했습니다.");
+        response.put("data", null);
+        
+        return ResponseEntity.internalServerError().body(response);
+    }
 }
