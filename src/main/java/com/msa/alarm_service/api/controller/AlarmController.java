@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.msa.alarm_service.api.entity.AlarmTypes;
 import com.msa.alarm_service.api.model.AlarmHistoryRequest;
 import com.msa.alarm_service.api.model.UserAlarmsDTO;
 import com.msa.alarm_service.api.service.AlarmService;
@@ -58,5 +59,13 @@ public class AlarmController {
     @PostMapping("/saveAlarmHistory")
     public String saveAlarmHistory(@RequestBody AlarmHistoryRequest request){
         return alarmService.saveAlarmHistory(request);
+    }
+    
+    /**
+     * 특정 알림 타입 조회
+     */
+    @GetMapping("/getAlarmType/{alarmTypeId}")
+    public AlarmTypes getAlarmType(@PathVariable("alarmTypeId") Integer alarmTypeId){
+        return alarmService.getAlarmType(alarmTypeId);
     }
 }
