@@ -12,9 +12,11 @@ spring:
     password: ${DB_PASSWORD}
 
   jpa:
-#    show-sql: true # 콘솔로그로 출력하려면
+    show-sql: true # 콘솔로그로 출력하려면
     hibernate:
-      ddl-auto: update # 주의. 잘못 건드리면 DB가 날라감
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     properties:
       hibernate:
         default_batch_fetch_size: 100
