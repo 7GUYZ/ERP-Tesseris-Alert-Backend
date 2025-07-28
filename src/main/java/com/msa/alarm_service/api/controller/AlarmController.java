@@ -78,8 +78,8 @@ public class AlarmController {
      */
     @GetMapping("/user-alarm-setting")
     public Map<String, Object> getUserAlarmSetting(
-            @RequestParam Integer userIndex,
-            @RequestParam Integer alarmTypesId) {
+            @RequestParam("userIndex") Integer userIndex,
+            @RequestParam("alarmTypesId") Integer alarmTypesId) {
         
         return alarmService.getUserAlarmSetting(userIndex, alarmTypesId);
     }
@@ -89,9 +89,9 @@ public class AlarmController {
      */
     @PostMapping("/update-user-alarm-setting")
     public Map<String, Object> updateUserAlarmSetting(
-            @RequestParam Integer userIndex,
-            @RequestParam Integer alarmTypesId,
-            @RequestParam Integer isActive) {
+            @RequestParam("userIndex") Integer userIndex,
+            @RequestParam("alarmTypesId") Integer alarmTypesId,
+            @RequestParam("isActive") Integer isActive) {
         
         return alarmService.updateUserAlarmSetting(userIndex, alarmTypesId, isActive);
     }
