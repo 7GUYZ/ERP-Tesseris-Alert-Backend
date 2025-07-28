@@ -37,6 +37,22 @@ public class AlarmHistoryService {
     }
     
     /**
+     * 알림 읽음 처리
+     */
+    public void markAsRead(Integer alarmId) {
+        log.info("알림 읽음 처리 시작 - alarmId: {}", alarmId);
+        
+        Alarms alarm = alarmHistoryRepo.findById(alarmId)
+            .orElseThrow(() -> new RuntimeException("알림을 찾을 수 없습니다. alarmId: " + alarmId));
+        
+        // is_receiver_read를 1로 변경
+        alarm.setIsReceiverRead(1);
+        alarmHistoryRepo.save(alarm);
+        
+        log.info("알림 읽음 처리 완료 - alarmId: {}", alarmId);
+    }
+    
+    /**
      * Alarms 엔티티를 AlarmHistoryResponseDTO로 변환
      */
     private AlarmHistoryResponseDTO convertToResponseDTO(Alarms alarm) {

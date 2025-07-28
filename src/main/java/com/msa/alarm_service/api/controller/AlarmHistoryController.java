@@ -29,9 +29,9 @@ public class AlarmHistoryController {
     /**
      * 사용자별 알림 내역 조회
      */
-    	@GetMapping("/user/{userIndex}")
-	public ResponseEntity<List<AlarmHistoryResponseDTO>> getUserAlarmHistory(
-			@PathVariable("userIndex") Integer userIndex) {
+    @GetMapping("/user/{userIndex}")
+    public ResponseEntity<List<AlarmHistoryResponseDTO>> getUserAlarmHistory(
+            @PathVariable("userIndex") Integer userIndex) {
         try {
             log.info("알림 내역 조회 요청 - userIndex: {}", userIndex);
             
@@ -44,6 +44,26 @@ public class AlarmHistoryController {
             log.error("알림 내역 조회 실패 - userIndex: {}, error: {}", userIndex, e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(List.of()); // 빈 리스트 반환으로 테스트
+        }
+    }
+
+    /**
+     * 알림 읽음 처리
+     */
+    @PostMapping("/alarms/{alarmId}/read")
+    public ResponseEntity<String> markAsRead(@PathVariable("alarmId") Integer alarmId) {
+        try {
+            log.info("알림 읽음 처리 요청 - alarmId: {}", alarmId);
+            
+            alarmHistoryService.markAsRead(alarmId);
+            
+            log.info("알림 읽음 처리 성공 - alarmId: {}", alarmId);
+            return ResponseEntity.ok("읽음 처리 완료");
+            
+        } catch (Exception e) {
+            log.error("알림 읽음 처리 실패 - alarmId: {}, error: {}", alarmId, e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("읽음 처리 실패");
         }
     }
 } 
