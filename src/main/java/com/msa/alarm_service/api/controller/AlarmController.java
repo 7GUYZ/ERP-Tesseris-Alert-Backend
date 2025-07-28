@@ -1,12 +1,16 @@
 package com.msa.alarm_service.api.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.msa.alarm_service.api.entity.AlarmTypes;
@@ -68,4 +72,28 @@ public class AlarmController {
     public AlarmTypes getAlarmType(@PathVariable("alarmTypeId") Integer alarmTypeId){
         return alarmService.getAlarmType(alarmTypeId);
     }
+
+    /**
+     * 사용자의 특정 알림 타입 설정 조회
+     */
+    @GetMapping("/user-alarm-setting")
+    public Map<String, Object> getUserAlarmSetting(
+            @RequestParam Integer userIndex,
+            @RequestParam Integer alarmTypesId) {
+        
+        return alarmService.getUserAlarmSetting(userIndex, alarmTypesId);
+    }
+
+    /**
+     * 사용자의 알림 설정 업데이트
+     */
+    @PostMapping("/update-user-alarm-setting")
+    public Map<String, Object> updateUserAlarmSetting(
+            @RequestParam Integer userIndex,
+            @RequestParam Integer alarmTypesId,
+            @RequestParam Integer isActive) {
+        
+        return alarmService.updateUserAlarmSetting(userIndex, alarmTypesId, isActive);
+    }
+
 }
