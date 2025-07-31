@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,12 +22,15 @@ public class AlarmHistoryService {
     private final AlarmTypesRepo alarmTypesRepo;
     
     /**
-     * 사용자별 알림 내역 조회
+     * 사용자별 알림 내역 조회 (최근 한달)
      */
     public List<AlarmHistoryResponseDTO> getUserAlarmHistory(Integer userIndex) {
         log.info("알림 내역 조회 시작 - userIndex: {}", userIndex);
         
-        List<Alarms> alarms = alarmHistoryRepo.findByUserIndexOrderByCreatedAtDesc(userIndex);
+        // 최근 한달 전 날짜 계산
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        
+        List<Alarms> alarms = alarmHistoryRepo.findByUserIndexOrderByCreatedAtDesc(userIndex, oneMonthAgo);
         
         List<AlarmHistoryResponseDTO> result = alarms.stream()
             .map(this::convertToResponseDTO)
